@@ -1,2 +1,8 @@
 # Design-Patterns
-Implementation of Design patterns
+Implementation of below Design patterns in JAVA for Product Trading and Bidding System (PTBS)
+
+1. Facade Façade
+2. Bridge
+3. Factory Method 
+4. Iterator
+5. Visitor
