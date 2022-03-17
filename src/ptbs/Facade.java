@@ -31,20 +31,30 @@ public class Facade implements VisitableItem {
     public Facade() {
         dataManager = new DataManager();
         createProductList();
+
     }
 
 
     ProductList getProducts() {
         return productList;
     }
+    static public boolean login(UserData userData)
+    {
+        Login login = new Login();
+        login.show();
+        String name = login.getUserName();
+        String password = login.getPassword();
+        System.out.println(name);
+        System.out.println(password);
+        return login.isExit;
+    }
+     public void login(String name, String password) throws Exception {
 
-    public  void login(String name, String password) throws Exception {
-        /*Read txt file*/
         System.out.println("-------Facade Pattern-------");
         System.out.println("Handling Login using the Facade pattern");
 
         try{
-            if(dataManager.fetchPassword(name).equals(password))
+            if(dataManager.fetchPassword(name,password).equals(password))
             {
                 currentUser = createUser(name);
                 attachProductToUser(currentUser);

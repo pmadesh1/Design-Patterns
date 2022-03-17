@@ -3,8 +3,6 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class Product implements VisitableItem {
     public String id;
     private ArrayList<Trading> tradingList = new ArrayList<Trading>();

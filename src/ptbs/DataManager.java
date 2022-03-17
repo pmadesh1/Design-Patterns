@@ -18,20 +18,16 @@ import domain.Buyer;
 
 public class DataManager {
 
-    private static final String FILE_PATH = "C:\\Users\\pravandu\\Desktop\\SER515\\DesignPattern\\src\\test_files\\";
+    public final String FILE_PATH = "C:\\Users\\pravandu\\Desktop\\SER515\\DesignPattern\\src\\test_files\\";
     public List<Product> initializeAllProducts() throws Exception
     {
         /*Initialize base on Person TYPE */
         return getDataMap("ProductInfo.txt").keySet().stream().map(Product::new).collect(Collectors.toList());
     }
 
-    public String fetchPassword(String userName) throws Exception
+    public String fetchPassword(String userName, String fileName) throws Exception
     {
-        List<String> str =  getDataMap("SellerInfo.txt").get(userName) ;
-        if(str == null)
-        {
-            str = getDataMap("BuyerInfo.txt").get(userName);
-        }
+        List<String> str =  getDataMap(fileName).get(userName) ;
         return str.get(0);
     }
 

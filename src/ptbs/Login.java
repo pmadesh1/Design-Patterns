@@ -3,7 +3,11 @@ package ptbs;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.lang.Exception;
+import java.util.List;
+
 
 public class Login extends JFrame{
 
@@ -15,11 +19,15 @@ public class Login extends JFrame{
     JRadioButton BuyerRadio ,  SellerRadio;
     ButtonGroup buttonGroup1;
     JPanel loginPanel;
+    String userName;
+    String password;
+    private DataManager dataManager = null;
 
     public Login(){
+        dataManager = new DataManager();
         initializeLoginPanel();
-        this.setSize(600 ,200);  //set size of the frame
-        this.setVisible(true);  //make form visible to the user
+        this.setSize(600 ,200);
+        this.setVisible(true);
     }
 
     void initializeLoginPanel(){
@@ -57,20 +65,58 @@ public class Login extends JFrame{
         buttonGroup1.add(BuyerRadio);
         buttonGroup1.add(SellerRadio);
 
-
         //set border to panel
         add(loginPanel, BorderLayout.CENTER);
 
-        //perform action on button click
-        //loginButton.addActionListener(this);
         setTitle("LOGIN FORM");
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("login click");
+                loginButton_actionPerformed(e);
+            }
+        });
+
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("exit click");
+                isExit = true;
+            }
+        });
+        System.out.println("End of Login init");
+    }
+    void loginButton_actionPerformed(ActionEvent e) {
+        System.out.println("On click called");
+        try{
+            String storedPassword ="";
+            setUserName(UserNameText.getText().toString());
+            setPassword(new String(PasswordText.getPassword()));
+            if (BuyerRadio.isSelected() == true){
+                storedPassword = dataManager.fetchPassword(userName, "BuyerInfo.txt");
+            } else {
+                storedPassword = dataManager.fetchPassword(userName, "SellerInfo.txt");
+            }
+            if(!(password.equals(storedPassword))){
+                isExit = true;
+            }
+            System.out.println(" Login Successful");
+        }
+        catch(Exception ex){
+
+        }
     }
 
-
-    public static void main(String[] args) throws Exception {
-        Login login = new Login();
-        System.out.println("login panel -end main");
-
+    void setUserName(String name){
+        userName = name;
     }
 
+    void setPassword(String key){
+        password = key;
+    }
+
+    String getUserName() {
+        return userName;
+    }
+    String getPassword(){
+        return password;
+    }
 }

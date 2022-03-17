@@ -1,5 +1,10 @@
 package domain;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.lang.Exception;
+
 public interface ProductMenu {
     abstract void showMenuButtons();
     abstract void showAddButtons();

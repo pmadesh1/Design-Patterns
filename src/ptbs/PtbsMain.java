@@ -1,5 +1,6 @@
-import ptbs.Facade;
+package ptbs;
 
+import ptbs.Facade;
 import java.util.Scanner;
 
 public class PtbsMain {
@@ -7,11 +8,9 @@ public class PtbsMain {
     static Facade facade = new Facade();
 
     public static void main(String[] args) throws Exception {
-        System.out.println("Enter User name:");
-        String userName = sc.nextLine();
-        System.out.println("Enter User password:");
-        String password = sc.nextLine();
-        facade.login(userName, password);
-
+        UserData userData = new UserData();
+        boolean loginStatus = facade.login(userData);
+        if (loginStatus)
+            System.out.println("Exit");
     }
 }
