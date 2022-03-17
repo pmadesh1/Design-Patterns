@@ -1,5 +1,6 @@
 package ptbs;
 
+import ptbs.UserData.USER_TYPE;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -12,37 +13,37 @@ import java.util.List;
 public class Login extends JFrame{
 
     boolean isExit = false;
-    JLabel jLabel1 ,jLabel2;
-    JButton loginButton ,exitButton ;
-    JTextField UserNameText ;
-    JPasswordField PasswordText ;
-    JRadioButton BuyerRadio ,  SellerRadio;
-    ButtonGroup buttonGroup1;
-    JPanel loginPanel;
+    JLabel jLabel1 = new JLabel("UserName ");
+    JLabel jLabel2 = new JLabel("Password");;
+    JButton loginButton = new JButton("Login");
+    JButton exitButton = new JButton("Exit");;
+    JTextField UserNameText = new JTextField();
+    JPasswordField PasswordText = new JPasswordField();;
+    JRadioButton BuyerRadio = new JRadioButton("Buyer");
+    JRadioButton SellerRadio = new JRadioButton("Seller");
+    ButtonGroup buttonGroup = new ButtonGroup();
+    JPanel loginPanel = new JPanel(new GridLayout(4, 1));
+    private DataManager dataManager = null;
+    private USER_TYPE userType = USER_TYPE.Buyer;
     String userName;
     String password;
-    private DataManager dataManager = null;
-
-    public Login(){
+    private UserData userData;
+    public Login(UserData userData){
+        this.userData = userData;
+        System.out.println(" login constructor ");
         dataManager = new DataManager();
         initializeLoginPanel();
-        this.setSize(600 ,200);
-        this.setVisible(true);
+        setSize(600 ,200);
+        setVisible(true);
+        System.out.println(" End of constructor " );
     }
 
     void initializeLoginPanel(){
         System.out.println("login panel");
-        jLabel1 = new JLabel("UserName ");
         jLabel1.setBounds(new Rectangle(26, 52, 80, 18));
-        jLabel2 = new JLabel("Password");
         jLabel2.setBounds(new Rectangle(23, 119, 80, 18));
-        loginButton = new JButton("Login");
         loginButton.setBounds(new Rectangle(31, 212, 85, 28));
-
-        exitButton = new JButton("Exit");
         exitButton.setBounds(new Rectangle(180, 211, 97, 28));
-        UserNameText = new JTextField();
-        PasswordText = new JPasswordField();
         UserNameText.setBounds(new Rectangle(119, 52, 144, 22));
         PasswordText.setBounds(new Rectangle(118, 119, 147, 22));
 
@@ -50,9 +51,7 @@ public class Login extends JFrame{
         SellerRadio = new JRadioButton("Seller");
         BuyerRadio.setBounds(new Rectangle(37, 164, 103, 26));
         SellerRadio.setBounds(new Rectangle(177, 162, 103, 26));
-        buttonGroup1 = new ButtonGroup();
 
-        loginPanel = new JPanel(new GridLayout(4, 1));
         loginPanel.add(jLabel1);
         loginPanel.add(UserNameText);
         loginPanel.add(jLabel2);
@@ -61,9 +60,8 @@ public class Login extends JFrame{
         loginPanel.add(exitButton);
         loginPanel.add(BuyerRadio);
         loginPanel.add(SellerRadio);
-
-        buttonGroup1.add(BuyerRadio);
-        buttonGroup1.add(SellerRadio);
+        buttonGroup.add(BuyerRadio);
+        buttonGroup.add(SellerRadio);
 
         //set border to panel
         add(loginPanel, BorderLayout.CENTER);
@@ -88,25 +86,37 @@ public class Login extends JFrame{
         System.out.println("On click called");
         try{
             String storedPassword ="";
-            setUserName(UserNameText.getText().toString());
+            setUserName(UserNameText.getText());
             setPassword(new String(PasswordText.getPassword()));
-            if (BuyerRadio.isSelected() == true){
+            System.out.println(getUserName());
+            System.out.println(getPassword());
+            if (BuyerRadio.isSelected()){
+                this.userData.setUserType(UserData.USER_TYPE.Buyer);
                 storedPassword = dataManager.fetchPassword(userName, "BuyerInfo.txt");
+
             } else {
+                this.userData.setUserType(UserData.USER_TYPE.Seller);
                 storedPassword = dataManager.fetchPassword(userName, "SellerInfo.txt");
             }
+
             if(!(password.equals(storedPassword))){
                 isExit = true;
+
             }
-            System.out.println(" Login Successful");
+            else {
+                System.out.println(" Login Successful - userType " + userType);
+                //this.dispose();
+                //Facade.createUser(userData);
+            }
         }
         catch(Exception ex){
-
+            ex.printStackTrace();
         }
     }
 
     void setUserName(String name){
         userName = name;
+        this.userData.setUserName(name);
     }
 
     void setPassword(String key){
@@ -118,5 +128,8 @@ public class Login extends JFrame{
     }
     String getPassword(){
         return password;
+    }
+    USER_TYPE getUserType() {
+        return userType;
     }
 }

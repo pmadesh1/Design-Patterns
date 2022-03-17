@@ -40,31 +40,51 @@ public class Facade implements VisitableItem {
     }
     static public boolean login(UserData userData)
     {
-        Login login = new Login();
+        Login login = new Login(userData);
         login.show();
-        String name = login.getUserName();
-        String password = login.getPassword();
-        System.out.println(name);
-        System.out.println(password);
+//        System.out.println("-------Facade Pattern-------");
+//        String name = login.getUserName();
+//        System.out.println(name);
+//        //System.out.println(password);
+//        userData.userName = login.getUserName();
+//        userData.userType = login.getUserType();
+//        System.out.println("------ " + userData.userName);
+//        System.out.println("------ "+ userData.userName);
         return login.isExit;
     }
-     public void login(String name, String password) throws Exception {
+
+   /* static public void callBuyerMenu(UserData userData)
+    {
+
+//        System.out.println("-------Facade Pattern-------");
+//        String name = login.getUserName();
+//        System.out.println(name);
+//        //System.out.println(password);
+//        userData.userName = login.getUserName();
+//        userData.userType = login.getUserType();
+          System.out.println("------ " + userData.userName);
+          System.out.println("------ "+ userData.userName);
+
+    }*/
+
+
+     public void createUser(UserData userData) throws Exception {
 
         System.out.println("-------Facade Pattern-------");
         System.out.println("Handling Login using the Facade pattern");
 
         try{
-            if(dataManager.fetchPassword(name,password).equals(password))
             {
-                currentUser = createUser(name);
+                currentUser = createUser(userData.userName);
                 attachProductToUser(currentUser);
                 //  productOperation();
                 this.selectedProduct = selectProduct();
                 this.theSelectedProduct = selectProductLevel();
                 this.displayMenu();
-            } else {
-                System.out.println("Incorrect userName or password");
-                System.exit(1);
+            }
+            {
+                //System.out.println("Incorrect userName or password");
+                //System.exit(1);
             }
         } catch(Exception ex) {
             System.out.println("Incorrect User Name or Password");

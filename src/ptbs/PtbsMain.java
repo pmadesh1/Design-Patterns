@@ -9,8 +9,11 @@ public class PtbsMain {
 
     public static void main(String[] args) throws Exception {
         UserData userData = new UserData();
+        System.out.println(" login main");
         boolean loginStatus = facade.login(userData);
-        if (loginStatus)
-            System.out.println("Exit");
+        System.out.print(userData.getUserName());
+        //facade.createUser(userData);
+        if(loginStatus)
+            System.out.println(" exit");
     }
 }
