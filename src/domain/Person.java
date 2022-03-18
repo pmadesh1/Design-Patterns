@@ -14,7 +14,7 @@ public abstract class Person {
     ProductMenu productMenu;
 
     public abstract ProductMenu createProductMenu(int productType);
-    public abstract void showProductMenu();
+    public abstract void showProductMenu() throws Exception;
 
     public ProductList getAddedProducts() {
         return addedProducts;
@@ -34,7 +34,6 @@ public abstract class Person {
         if(addedProducts == null)
             addedProducts = new ProductList(products);
         else
-
             addedProducts.addAll(products);
     }
 }

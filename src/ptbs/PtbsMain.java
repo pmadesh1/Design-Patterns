@@ -8,12 +8,15 @@ public class PtbsMain {
     static Facade facade = new Facade();
 
     public static void main(String[] args) throws Exception {
+        //System.out.println("Enter User name:");
+        //String userName = sc.nextLine();
+        //System.out.println("Enter User password:");
+        //String password = sc.nextLine();
+        //facade.login(userName, password);
         UserData userData = new UserData();
-        System.out.println(" login main");
         boolean loginStatus = facade.login(userData);
-        System.out.print(userData.getUserName());
         //facade.createUser(userData);
-        if(loginStatus)
-            System.out.println(" exit");
+
+
     }
 }

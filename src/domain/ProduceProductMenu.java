@@ -1,9 +1,16 @@
 package domain;
 
+import ptbs.DataManager;
+
+import java.util.List;
+import java.util.Map;
+
 public class ProduceProductMenu implements ProductMenu {
     @Override
-    public void showMenuButtons() {
-        System.out.println("Show menu button in ProduceProductMenu");
+    public void showMenuButtons() throws Exception {
+        DataManager dm = new DataManager();
+        Map<String, List<String>> map = dm.getDataMap("ProductInfo.txt");
+        System.out.println("Produce Product Menu: " +map.get("Produce"));
     }
 
     @Override

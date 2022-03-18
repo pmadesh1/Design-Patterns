@@ -19,7 +19,7 @@ public class Seller extends Person{
     }
 
     @Override
-    public void showProductMenu() {
+    public void showProductMenu() throws Exception {
         productMenu.showMenuButtons();
         productMenu.showAddButtons();
         productMenu.showRadioButtons();

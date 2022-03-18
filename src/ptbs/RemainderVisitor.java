@@ -36,7 +36,6 @@ public class RemainderVisitor extends NodeVisitor {
 
         //visiting assignment
         System.out.println("Visiting Trading with deadline:"+(trading.deadline.toString()));
-
         //Handle reminders based on deadline
     }
 }

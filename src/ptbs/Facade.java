@@ -31,7 +31,6 @@ public class Facade implements VisitableItem {
     public Facade() {
         dataManager = new DataManager();
         createProductList();
-
     }
 
 
@@ -41,37 +40,15 @@ public class Facade implements VisitableItem {
     static public boolean login(UserData userData)
     {
         Login login = new Login(userData);
-        login.show();
-//        System.out.println("-------Facade Pattern-------");
-//        String name = login.getUserName();
-//        System.out.println(name);
-//        //System.out.println(password);
-//        userData.userName = login.getUserName();
-//        userData.userType = login.getUserType();
-//        System.out.println("------ " + userData.userName);
-//        System.out.println("------ "+ userData.userName);
-        return login.isExit;
+        login.setVisible(true);
+        System.out.println("-------Facade Pattern-------");
+        return login.loginStatus;
     }
 
-   /* static public void callBuyerMenu(UserData userData)
-    {
-
-//        System.out.println("-------Facade Pattern-------");
-//        String name = login.getUserName();
-//        System.out.println(name);
-//        //System.out.println(password);
-//        userData.userName = login.getUserName();
-//        userData.userType = login.getUserType();
-          System.out.println("------ " + userData.userName);
-          System.out.println("------ "+ userData.userName);
-
-    }*/
-
-
-     public void createUser(UserData userData) throws Exception {
+     public void CreateUser(UserData userData) throws Exception {
 
         System.out.println("-------Facade Pattern-------");
-        System.out.println("Handling Login using the Facade pattern");
+        System.out.println("Handling createUser and attach product to user using the Facade pattern");
 
         try{
             {
@@ -80,7 +57,7 @@ public class Facade implements VisitableItem {
                 //  productOperation();
                 this.selectedProduct = selectProduct();
                 this.theSelectedProduct = selectProductLevel();
-                this.displayMenu();
+                this.displayMenu(userData);
             }
             {
                 //System.out.println("Incorrect userName or password");
@@ -92,43 +69,41 @@ public class Facade implements VisitableItem {
         }
 
     }
-
-    void addTrading(Product product, Trading trading) {
-
+    void addProductItem( UserData userdata, String productName){
+        System.out.println("********* Adding new product item *********");
+        dataManager.addItemtoFile(userdata, productName);
     }
 
-    void gradeOffering(Offering offering) {
 
-    }
-
-    void submitOffering(Offering offering) {
-
-    }
-
-    void reportOffering(Offering offering) {
-
-    }
-
-    void displayMenu() {
+    void displayMenu(UserData userData) throws Exception {
         System.out.println("********* Choose an operation *********");
         System.out.println("1. Create product menu");
         System.out.println("2. Show product menu");
         System.out.println("3. Remind");
         System.out.println("4. Done");
+        System.out.println("5. Add an item");
 
         try {
             int selectionIndex = Integer.parseInt(br.readLine());
             switch(selectionIndex) {
                 case 1: {
                     productOperation();
-                    displayMenu();
+                    displayMenu(userData);
                     break;
                 }
                 case 2: {
-                    showProductMenuCreated(); break;
+                    showProductMenuCreated();
+                    break;
                 }
                 case 3: {
                     remind(); break;
+                }
+                case 5: {
+                    System.out.println(" Enter item to be added ");
+                    String product = sc.nextLine();
+                    addProductItem(userData, product);
+                    displayMenu(userData);
+                    break;
                 }
                 default : {
                     System.out.println("Exiting...");
@@ -136,8 +111,8 @@ public class Facade implements VisitableItem {
                     break;
                 }
             }
-            if(selectionIndex!=4) {
-                displayMenu();
+            if(selectionIndex!=5) {
+                displayMenu(userData);
             }
         } catch (IOException ioe) {
             System.out.println(ioe);
@@ -160,7 +135,6 @@ public class Facade implements VisitableItem {
     }
 
     private Person createUser(String name) throws Exception {
-        //print creating user
         return dataManager.initializePerson(name);
     }
 
@@ -199,14 +173,13 @@ public class Facade implements VisitableItem {
         }
 
         System.out.println("Enter product selection:");
-
         try {
             selectionIndex = Integer.parseInt(br.readLine());
         } catch (IOException ioe) {
             System.out.println(ioe);
         }
 
-        Product selectedProduct = (Product) currentUser.getAddedProducts().get(selectionIndex); // Dummy project object
+        Product selectedProduct = (Product) currentUser.getAddedProducts().get(selectionIndex);
         return selectedProduct;
     }
 
@@ -218,7 +191,7 @@ public class Facade implements VisitableItem {
         }
     }
 
-    void showProductMenuCreated() {
+    void showProductMenuCreated() throws Exception {
         currentUser.showProductMenu();
     }
 
@@ -231,6 +204,18 @@ public class Facade implements VisitableItem {
         //print accept in facade
         System.out.println("-------Visitor pattern-------");
         visitor.visit(this);
+    }
+
+    void addTrading(Product product, Trading trading) {
+    }
+
+    void gradeOffering(Offering offering) {
+    }
+
+    void submitOffering(Offering offering) {
+    }
+
+    void reportOffering(Offering offering) {
     }
 }
 

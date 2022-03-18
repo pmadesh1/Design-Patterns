@@ -6,7 +6,8 @@ import java.awt.event.*;
 import java.lang.Exception;
 
 public interface ProductMenu {
-    abstract void showMenuButtons();
+
+    abstract void showMenuButtons() throws Exception;
     abstract void showAddButtons();
     abstract void showViewButtons();
     abstract void showComboBoxes();
